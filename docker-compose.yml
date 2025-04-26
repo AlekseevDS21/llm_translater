@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      # Кешировать шаги сборки
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - SITE_URL=${SITE_URL:-http://llm-translator.example.com}
+      - SITE_NAME=${SITE_NAME:-LLM Translator}
+    # Ограничения ресурсов для более эффективной работы
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+
+  frontend:
+    build:
+      context: ./frontend
+      # Кешировать шаги сборки
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    restart: always
+    environment:
+      - STREAMLIT_SERVER_MAX_UPLOAD_SIZE=10
+      - STREAMLIT_CLIENT_TOOLBAR_MODE=minimal
+    # Ограничения ресурсов для более эффективной работы
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+
+# Включаем BuildKit для более быстрой сборки
+x-mutagen:
+  enabled: true
