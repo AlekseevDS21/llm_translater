@@ -1,51 +1,71 @@
 # LLM Translator
 
-A multilingual translation application powered by advanced LLM technology via OpenRouter API.
+Переводчик с поддержкой множества языков, использующий OpenRouter API
 
-## Features
+![Demo GIF](demo.gif)
 
-- Translate text between multiple languages
-- User-friendly interface built with Streamlit
-- Backend API powered by FastAPI
-- Container-based deployment with Docker and Docker Compose
+## Основные возможности
 
-## Getting Started
+- **Поддержка 10+ языков** (английский, русский, китайский, испанский и другие)
+- **Интерфейс** с возможностью быстрого переключения языков
+- **Проверка качества** перевода
+- **Мультимодельный подход** (DeepSeek, Llama и другие)
+- **Контейнеризированное развертывание** через Docker
 
-### Prerequisites
+## Архитектура 
 
-- Docker and Docker Compose installed on your system
-- An OpenRouter API key
+### Frontend (Streamlit)
+- **Интуитивно понятный интерфейс** с переключателем языков
+- **Мгновенная обработка ввода** 
+- **Визуальные уведомления** о статусе перевода
 
-### Setup
+### Backend (FastAPI)
+- **REST API** с валидацией запросов
+- **Мультимодельная система** - автоматический выбор LLM
+- **Подробное логирование** всех операций
+  
+  
+## Getting Started!
 
-1. Clone this repository
-2. Add your OpenRouter API key to the `.env` file:
+### Требования
+
+- Установленные Docker и Docker Compose
+- API-ключ от OpenRouter
+
+### Установка
+
+1. Необходимо клонировать этот репозиторий
+2. Создайте файл .env и добавьте ваш API-ключ:
    ```
    OPENROUTER_API_KEY=your_api_key_here
    SITE_URL=your_site_url_here
    SITE_NAME=LLM Translator
    ```
-3. Build and start the containers:
+3. Запустите контейнер
    ```
    docker-compose up -d
    ```
-4. Access the translator at http://localhost:8501
+4. Откройте приложение на http://localhost:8501
 
-## Architecture
 
-- **Frontend**: Streamlit application that provides the user interface
-- **Backend**: FastAPI service that handles translation requests via OpenRouter API
 
-## Development
+## Разработка
+Для локальной разработки 
+```bash
+# Установка зависимостей
+pip install -r backend/requirements.txt
+pip install -r frontend/requirements.txt
 
-To run the application locally for development:
+# Запуск backend (FastAPI)
+cd backend && uvicorn app:app --reload
 
-1. Install Python 3.9+ and pip
-2. Install backend requirements: `pip install -r backend/requirements.txt`
-3. Install frontend requirements: `pip install -r frontend/requirements.txt`
-4. Run the backend: `cd backend && uvicorn app:app --reload`
-5. Run the frontend: `cd frontend && streamlit run app.py`
+# Запуск frontend (Streamlit)
+cd frontend && streamlit run app.py
+```
 
-## License
 
-See the LICENSE file for details.
+## Участники
+- [Артем Сухов](https://github.com/sukhovtema)
+- [Оксана Захарова](https://github.com/OksZkh) 
+- [Александра Скитская](https://github.com/skitskayaav)
+- [Алексеев Андрей](https://github.com/AlekseevDS21) 
